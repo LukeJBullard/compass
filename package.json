@@ -8,6 +8,7 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
+    "release-build": "npx react-native build-android --mode=\"release\" && npm run android -- --mode=\"release\"",
     "copy-build": "cp android/app/build/outputs/apk/release/app-release.apk dist/Compass.apk"
   },
   "dependencies": {

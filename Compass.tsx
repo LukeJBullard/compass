@@ -1,11 +1,59 @@
 //adapted from https://www.geeksforgeeks.org/create-a-compass-app-using-react-native/
 import React, { useEffect, useState } from "react";
 import CompassHeading from "react-native-compass-heading";
-import { View, Text, StyleSheet, Animated } from "react-native";
+import { View, Text, StyleSheet, Animated, useWindowDimensions } from "react-native";
 
 function Compass({fontSize}) {
     const [heading, setHeading] = useState(0);
     const rotateValue = new Animated.Value(0);
+    const dimensions = useWindowDimensions();
+    var compassImageWidth = dimensions.width * 0.95;
+    compassImageWidth += compassImageWidth % 2 == 0 ? 1 : 0;
+
+
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center"
+        },
+        appName: {
+            fontSize: 24,
+            fontWeight: "bold",
+            marginBottom: 10,
+            color: "#333",
+        },
+        compassContainer: {
+            width: compassImageWidth,
+            height: "70%",
+            justifyContent: "center",
+            alignItems: "center",
+            elevation: 2
+        },
+        compassImage: {
+            width: compassImageWidth,
+            height: compassImageWidth,
+            marginRight: 1.25
+        },
+        headingValue: {
+            fontSize: 18,
+            marginTop: 10,
+            color: "#555",
+        },
+        cardinalDirection: {
+            fontSize: 18,
+            marginTop: 10,
+            color: "#555",
+        },
+        directionLine: {
+            position: 'absolute',
+            height: dimensions.height * 0.75,
+            top: 0,
+            width: 2,
+            backgroundColor: '#888888',
+            elevation: 1
+        }
+    });
  
     useEffect(() => {
         const degreeUpdateRate = 3;
@@ -39,6 +87,7 @@ function Compass({fontSize}) {
  
     return (
         <View style={styles.container}>
+            <View style={styles.directionLine} />
             <View style={styles.compassContainer}>
                 <Animated.Image
                     source={require("./compass.png")}
@@ -54,46 +103,5 @@ function Compass({fontSize}) {
         </View>
     );
 }
- 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    appName: {
-        fontSize: 24,
-        fontWeight: "bold",
-        marginBottom: 10,
-        color: "#333",
-    },
-    compassContainer: {
-        width: 250,
-        height: 250,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#fff",
-        borderRadius: 125,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 3,
-        elevation: 5,
-    },
-    compassImage: {
-        width: 200,
-        height: 200,
-    },
-    headingValue: {
-        fontSize: 18,
-        marginTop: 10,
-        color: "#555",
-    },
-    cardinalDirection: {
-        fontSize: 18,
-        marginTop: 10,
-        color: "#555",
-    },
-});
  
 export default Compass;
